@@ -1,0 +1,53 @@
+{% extends "layout-admin.html" %}
+{% block main %}
+	<h1 class="title-h1">Habilitar usuarios online</h1>
+
+	<form action="{{ url }}enableUsers" method="POST">
+
+		<table id="products">
+			<tr id="table-title">
+
+				<th>Nombre</th>
+				<th>Apellido</th>
+				<th>Documento</th>
+				<th>Nro° doc</th>
+				<th>Ubicai&oacute;n</th>
+				<th>Habilitar</th>
+			</tr>
+
+			{% for user in users %}
+			<tr>
+
+				<th>{{ user.name }}</th>
+				<th>{{ user.lastName }}</th>
+				<th>{{ user.documentType }}</th>
+				<th>{{ user.document }}</th>
+				<th>{{ user.location.name }}</th>
+				<th><input type="checkbox" name="{{ user.id }}" value="{{ user.id }}"></th>
+			</tr>
+			{% endfor %}
+		</table>
+		<br><br>
+		{% if numberOfPages > 1 %}
+			<ul id="pagination">
+				{% if actualPage > 0 %}
+					<li><a href="{{ url }}enableUsers/?page={{ actualPage - 1 }}">Anterior</a></li>
+				{% endif %}
+				{% for i in 0..numberOfPages - 1 %}
+					{% if actualPage == i %}
+						<li>{{ i + 1 }}</li>
+					{% else %}
+						<li><a href="{{ url }}enableUsers/?page={{ i }}">{{ i + 1 }}</a></li>
+					{% endif %}
+					
+				{% endfor %}
+				{% if actualPage < numberOfPages - 1 %}
+					<li><a href="{{ url }}enableUsers/?page={{ actualPage + 1  }}">Siguiente</a></li>
+				{% endif %}
+			</ul>
+		{% endif %}
+		<br><br>
+		<button type="submit"> HABILITAR</button>
+	</form>
+	
+{% endblock %}

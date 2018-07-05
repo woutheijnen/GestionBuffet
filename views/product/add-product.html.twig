@@ -1,0 +1,35 @@
+{% extends "layout-admin.html" %}
+
+{% block main %}
+	<form action="/index.php/product/{{action}}" method="POST">
+			<h1 class="title-h1">Datos del producto</h1>
+
+			<input type="text" id="product-name" name="product-name" title="product-name" pattern="[A-Za-z]{2,}|[A-Za-z]{2,} [A-Za-z]{2,}|[A-Za-z]{2,} |[A-Za-z]{2,} [A-Za-z]{2,} " placeholder="*Nombre" required value= "{{ product.name }}">
+			<input type="text" id="product-brand" name="brand" title="product-brand"  pattern="[A-Za-z]{2,}|[A-Za-z]{2,} [A-Za-z]{2,}|[A-Za-z]{2,} |[A-Za-z]{2,} [A-Za-z]{2,} " placeholder="*Marca" required value="{{ product.brand }}"> <br>
+			<input type="text" id="product-code" name="code" title="product-code" placeholder="*C&oacute;digo de barra" pattern="[0-9]{13}" required value="{{ product.code }}">
+			<input type="number" id="product-amount" name="amount" title="product-amount" placeholder="Cantidad de stock" value="{{ product.stock }}"><br>
+			<input type="number" id="product-minimum-amount" name="minimum-amount" title="product-minimum-amount" placeholder="*Cant m&iacute;n de stock" required  value="{{ product.minimumStock }}">
+
+			<div class="categorias">
+				<h4 class="text-description">*Categor&iacute;a</h4>
+				<select name="category">
+					{% for category in categories %}
+						<option value="{{ category.id }}" {% if category.id == product.category.id %} selected {% endif %}>{{ category.name }}
+					{% endfor %}
+				</select>
+			</div>
+
+			<select name="provider">
+				{% for provider in providers %}
+						<option value="{{ provider.id }}" {% if provider.id == product.provider.id %} selected {% endif %}>{{ provider.name }}
+				{% endfor %}
+			</select>
+<!--			<input type="text" id="product-provider" name="provider" title="product-provider" placeholder="*Proveedor" required>
+-->
+			<input type="number" id="product-unit-price" name="unit-price" title="product-unit-price" placeholder="*Precio de venta unitario" step="2" required  value="{{ product.price }}"><br><br>
+
+			<h4 id="date-text" class="text-description">Fecha de alta</h4>
+			<input type="text" id="date" name="date" value="19/09/2016" title="date" required readonly><br>
+			<button type="submit"> DAR DE ALTA</button>
+		</form>
+{% endblock %}

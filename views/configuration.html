@@ -1,0 +1,16 @@
+{% extends "layout-admin.html" %}
+{% block main %}
+	<form action="{{ url }}index" method="POST">
+		<h1 class="title-h1">Configuraci&oacute;n del sitio</h1>
+		<input type="hidden" id="id" name="id" title="id" value="{{ config.id }}">
+		<input type="text" name="title" id="title" placeholder="*T&iacute;tulo de la p&aacute;gina" value="{{ config.title }}" required> <br>
+		<input type="number" name="number-of-items" id="number-of-items" placeholder="*Cantidad de elementos por p&aacute;gina" value="{{ config.numberOfItems }}" min="1" required><br>
+		<div id="enabled-site">
+			Estado de la p&aacute;gina:<br>
+			<input type="radio" name="enabled-site" id="true" {% if config.enabledSite == 1 %} checked {% endif %} value=1>Habilitar<br>
+			<input type="radio" name="enabled-site" id="false" {% if config.enabledSite == 0 %} checked {% endif %} value=0>Deshabilitar<br>
+		</div>
+		<textarea cols=90 rows=10 name="disabling-message" id="disabling-message" placeholder="*Texto de deshabilitacion" required> {{ config.disablingMessage }} </textarea><br><br>
+		<button type="submit"> GUARDAR CAMBIOS</button>
+	</form>
+{% endblock %}

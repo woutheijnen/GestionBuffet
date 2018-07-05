@@ -1,0 +1,64 @@
+{% extends "layout-admin.html" %}
+
+{% block main %}
+
+	<h1 class="title-h1">{{ accion }}</h1>
+
+	<table id="products">
+		<tr id="table-title">
+			<th>ID</th>
+			<th>CUIT</th>
+			<th>Factura</th>
+			<th>Productos</th>
+			<th>Editar</th>
+			<th>Eliminar</th>
+		</tr>
+
+		{% for sale in sales %}
+		<tr>
+			<th>{{ sale.id }}</th>
+			<th>{{ sale.cuit }}</th>
+			<th>{{ sale.path_of_scan }}</th>
+			<th>{{ sale.product_list }}</th>
+			<th><a href="{{ session.base_path }}editSale/{{ sale.id }}"><i class="fa fa-pencil" aria-hidden="true"></i></a></th>
+			<th><a href="{{ session.base_path }}deleteSale/{{ sale.id }}"><i class="fa fa-times" aria-hidden="true"></i></a></th>
+		</tr>
+		{% endfor %}
+	</table>
+
+	{% if numberOfPages > 1 %}
+		<ul id="pagination">
+			{% if actualPage > 0 %}
+				<li><a href="{{ url }}listar/?page={{ actualPage - 1 }}">Anterior</a></li>
+			{% endif %}
+			{% for i in 0..numberOfPages - 1 %}
+				{% if actualPage == i %}
+					<li>{{ i + 1 }}</li>
+				{% else %}
+					<li><a href="{{ url }}listar/?page={{ i }}">{{ i + 1 }}</a></li>
+				{% endif %}
+				
+			{% endfor %}
+			{% if actualPage < numberOfPages - 1 %}
+				<li><a href="{{ url }}listar/?page={{ actualPage + 1  }}">Siguiente</a></li>
+			{% endif %}
+		</ul>
+	{% endif %}
+
+	<script>
+		$(document).ready(function() {
+			var table = document.getElementById("products");
+			for (var i = 1, row; row = table.rows[i]; i++) {
+				//Convertir en un listado hermosa
+				var rowdata = row.cells[3].innerHTML.split('|');
+				var list = "";
+				for(var j=0; j<rowdata.length; j++) {
+					var celldata = rowdata[j].split(';');
+					list += celldata[2] + "x " + celldata[1] + "<br>";
+				}
+				row.cells[3].innerHTML = list;
+			}
+		});
+	</script>
+
+{% endblock %}

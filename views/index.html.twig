@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block addUser %}
+	<li>
+		<a href="/index.php/main/addUser">Registrarse</a>
+	</li>
+{% endblock %}
+{% block main %}
+{% if configuration.enabledSite == 1 %}
+	<h1 class="title-h1">{{ configuration.title }}</h1>
+
+		<div id="wrapper">
+			<main id="menus"><!--CUERPO PRINCIPAl-->
+				<h1>Buffet - Men&uacute;es del d&iacute;a</h1>
+				<div id="menu1" class="menu">
+					<h2 class="menu-title">Milanesa a la napolitana con papas fritas</h2>
+				  <img src="uploads/menu/milanapolitana.jpg" alt="men&uacute; numero uno">
+					<span class="menu-price">$45</span>
+				</div>
+				<div id="menu2" class="menu">
+					<h2 class="menu-title">Milanesa a la napolitana con papas fritas</h2>
+				  <img src="uploads/menu/milanapolitana.jpg" alt="men&uacute; numero dos">
+					<span class="menu-price">$45</span>
+				</div>
+			</main><!--CUERPO PRINCIPAl-->
+			<aside id="menu-right">
+				<div id="aside-photo">
+					<img src="images/buffet_info.jpg" alt="buffet de la facultad">
+				</div>
+				<section id="extra">
+					<h2>Tambi&eacute;n pod&eacute;s pedir</h2>
+					<article>
+						<h3>Ensalada 4 ingredientes</h3>
+						<img src="uploads/menu/Ensalada_4_ingredientes.jpg" alt="extra n&uacute;mero uno" class="food-image" >
+					</article>
+					<article>
+						<h3>Tarta JyQ</h3>
+						<img src="uploads/menu/tarta_jyq.jpg" alt="extra n&uacute;mero dos"  class="food-image">
+					</article>
+					<article>
+						<h3>Empanadas carne - verdura - pollo</h3>
+						<img src="uploads/menu/empanada_carne.jpg" alt="extra n&uacute;mero tres" class="food-image" >
+					</article>
+				</section>
+			</aside>
+		</div>
+	 
+{% else %}
+	<h2>{{ configuration.disablingMessage }}</h2>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "layout-admin.html" %}
+
+{% block main %}
+
+	<h1 class="title-h1">{{ accion }}</h1>
+
+	<table id="products">
+		<tr id="table-title">
+			<th>ID</th>
+			<th>Nombre</th>
+			<th>Marca</th>
+			<th>Stock</th>
+			<th>Precio</th>
+			<th>Categoria</th>
+			<th>Proveedor</th>
+			<th>Editar</th>
+			<th>Eliminar</th>
+		</tr>
+
+		{% for product in products %}
+		<tr>
+			<th>{{ product.id }}</th>
+			<th>{{ product.name }}</th>
+			<th>{{ product.brand }}</th>
+			<th>{{ product.stock }}</th>
+			<th>{{ product.price }}</th>
+			<th>{{ product.category.name }}</th>
+			<th>{{ product.provider.name }}</th>
+			<th><a href="{{ session.base_path }}editProduct/{{ product.id }}"><i class="fa fa-pencil" aria-hidden="true"></i></a></th>
+			<th><a href="{{ session.base_path }}deleteProduct/{{ product.id }}"><i class="fa fa-times" aria-hidden="true"></i></a></th>
+		</tr>
+		{% endfor %}
+	</table>
+
+	{% if numberOfPages > 1 %}
+		<ul id="pagination">
+			{% if actualPage > 0 %}
+				<li><a href="{{ url }}listar/?page={{ actualPage - 1 }}">Anterior</a></li>
+			{% endif %}
+			{% for i in 0..numberOfPages - 1 %}
+				{% if actualPage == i %}
+					<li>{{ i + 1 }}</li>
+				{% else %}
+					<li><a href="{{ url }}listar/?page={{ i }}">{{ i + 1 }}</a></li>
+				{% endif %}
+				
+			{% endfor %}
+			{% if actualPage < numberOfPages - 1 %}
+				<li><a href="{{ url }}listar/?page={{ actualPage + 1  }}">Siguiente</a></li>
+			{% endif %}
+		</ul>
+	{% endif %}
+
+{% endblock %}

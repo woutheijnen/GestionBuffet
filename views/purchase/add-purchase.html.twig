@@ -1,0 +1,121 @@
+{% extends "layout-admin.html" %}
+
+{% block main %}
+	<form id="purchaseform" action="/index.php/purchase/{{action}}" method="POST">
+			<h1 class="title-h1">Datos de la compra</h1>
+			<h2>CUIT</h2>
+			<input type="text" id="purchase-cuit" name="purchase-cuit" title="purchase-cuit" placeholder="*Cuit" required value= "{{ purchase.cuit }}">
+			<br>
+			<h2>Scan de la factura</h2>
+			<input type="file" id="purchase-path_of_scan" name="purchase-path_of_scan" title="purchase-path_of_scan" placeholder="Scan de la factura" required value="{{ purchase.path_of_scan }}"> <br><br>
+			<br>
+			<p><strong>Agregar a listado:</strong></p>
+			<select name="productid" id="productid">
+				{% for product in products %}
+						<option value="{{ product.id }}" >{{ product.name }}
+				{% endfor %}
+			</select>
+		
+			<select name="productprice" id="productprice" style="display: none;">
+				{% for product in products %}
+						<option value="{{ product.price }}" >{{ product.id }}
+				{% endfor %}
+			</select>
+		
+			<input type="number" id="product-quantity" name="product-quantity" title="product-quantity" placeholder="*Cantidad producto" step="1"  value="1"><br><br>
+			<button type="button" onclick="addProductToList()">Agregar producto</button>
+			<br><br>
+			<table id="products">
+				<tr id="table-title">
+					<th>ID</th>
+					<th>Producto</th>
+					<th>Cantidad</th>
+					<th>Precio</th>
+					<th>Eliminar</th>
+				</tr>
+			</table>
+			<br><br>
+		
+			<h4 id="date-text" class="text-description">Fecha de alta</h4>
+			<input type="text" id="date" name="date" value="19/09/2016" title="date" required readonly><br>
+			<input type="text" id="purchase-product_list" name="purchase-product_list" title="purchase-product_list" style="display: none;" required readonly value="{{ purchase.product_list }}"> <br><br>
+			<button type="button" onclick="convertTable()"> DAR DE ALTA</button>
+		</form>
+	<script>		
+		//Por la listado de productos de la compra
+		var counter = 1;
+		function addProductToList() {
+			var table = document.getElementById("products");
+			var row = table.insertRow(1);
+			row.id = counter;
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
+			var cell5 = row.insertCell(4);
+			var product = document.getElementById("productid");
+			cell1.innerHTML = product.value;
+			cell2.innerHTML = product.options[product.selectedIndex].text;
+			cell3.innerHTML = document.getElementById("product-quantity").value;
+			cell4.innerHTML = document.getElementById("productprice").options[product.selectedIndex].value;
+			cell5.innerHTML = '<button type="button" onclick="deleteRowById('+ counter +')">Eliminar</button>';
+			counter ++;
+		}
+		
+		function deleteRowById(rowid)  
+		{   
+			var row = document.getElementById(rowid);
+			row.parentNode.removeChild(row);
+		}
+		
+		//Convertir la table para guardarlo
+		function convertTable() {
+			var value = "";
+			var table = document.getElementById("products");
+			for (var i = 1, row; row = table.rows[i]; i++) {
+			   for (var j = 0, col; col = row.cells[j]; j++) {
+				   if(j<4) {
+				   		value += col.innerHTML + ";";
+				   }else{
+					   value.slice(0, -1);
+					   value += "|";
+				   }
+			   }
+			}
+			document.getElementById("purchase-product_list").value = value.slice(0, -1); //Borrar ultimo ','
+			document.getElementById("purchaseform").submit();
+		}
+		
+		//Cargar tabla (para editarlo)
+		$(document).ready(function() {
+			var data = document.getElementById("purchase-product_list").value;
+			if(data != ''){
+				var table = document.getElementById("products");
+				var rowdata = data.split('|');
+				var row;
+				var cell1;
+				var cell2;
+				var cell3;
+				var cell4;
+				var cell5;
+				for (var i = 0; i<rowdata.length; i++) {
+					//Convertir en una tabla hermosa
+					row = table.insertRow(1);
+					row.id = counter;
+					cell1 = row.insertCell(0);
+					cell2 = row.insertCell(1);
+					cell3 = row.insertCell(2);
+					cell4 = row.insertCell(3);
+					cell5 = row.insertCell(4);
+					var celldata = rowdata[i].split(';');
+					cell1.innerHTML = celldata[0];
+					cell2.innerHTML = celldata[1];
+					cell3.innerHTML = celldata[2];
+					cell4.innerHTML = celldata[3];
+					cell5.innerHTML = '<button type="button" onclick="deleteRowById('+ counter +')">Eliminar</button>';
+					counter ++;
+				}
+			}
+		});
+	</script>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}
+	Opciones Administrador
+{% endblock %}
+
+{% block stylesheet %}
+	<link rel="stylesheet" type="text/css" href="/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/css/navBar.css">
+	<link rel="stylesheet" type="text/css" href="	https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css
+">
+{% endblock %}
+
+{% block body %}
+	<header id="navtop">
+		<div id="minified-sidebar">
+
+			<i class="fa fa-bars" aria-hidden="true"></i>
+		</div>
+		<div id="navtop-center">Sistema administraci&oacute;n Buffet de la Facultad</div>
+		<ul id="navtop-right">
+			<span>{{ session.username }} - {{ session.role }} </span>
+			{% block configuration %}{% endblock %}
+			{% block addUser %}{% endblock %}
+			<li>
+				{% if session.loggedin %}
+					<a href="/index.php/main/logout">Cerrar Sesi&oacute;n</a>
+				{% else %}
+					<a href="/index.php/main/login">Login</a>
+				{% endif %}
+			</li>
+		</ul>
+	</header>
+	<div class="wrapper">
+		<nav id="sidebar">
+				{% block sidebar %} {% endblock %}
+		</nav><!--PANEL IZQUIERDA (CONTIENE A LA LISTA IZQUIERDA)-->
+
+		<main><!--CUERPO PRINCIPAl-->
+			{% block main %} {% endblock %}
+		</main><!--CUERPO PRINCIPAl-->
+
+	</div>
+
+	<script>
+	$(document).ready(function() {
+		$('#minified-sidebar').click(function() {
+    $('#sidebar').fadeToggle();
+		});
+	});
+	</script>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "layout-admin.html" %}
+
+{% block main %}
+
+	<h1 class="title-h1">Proveedores</h1>
+
+	<table id="products">
+		<tr id="table-title">
+			<th>ID</th>
+			<th>Nombre</th>
+			<th>CUIT</th>
+			<th>Email</th>
+			<th>Editar</th>
+			<th>Eliminar</th>
+		</tr>
+
+		{% for provider in providers %}
+		<tr>
+			<th>{{ provider.id }}</th>
+			<th>{{ provider.name }}</th>
+			<th>{{ provider.cuit }}</th>
+			<th>{{ provider.email }}</th>
+			<th><a href="{{ session.base_path }}editProvider/{{ provider.id }}"><i class="fa fa-pencil" aria-hidden="true"></i></a></th>
+			<th><a href="{{ session.base_path }}deleteProvider/{{ provider.id }}"><i class="fa fa-times" aria-hidden="true"></i></a></th>
+		</tr>
+		{% endfor %}
+	</table>
+
+	{% if numberOfPages > 1 %}
+		<ul id="pagination">
+			{% if actualPage > 0 %}
+				<li><a href="{{ url }}listar/?page={{ actualPage - 1 }}">Anterior</a></li>
+			{% endif %}
+			{% for i in 0..numberOfPages - 1 %}
+				{% if actualPage == i %}
+					<li>{{ i + 1 }}</li>
+				{% else %}
+					<li><a href="{{ url }}listar/?page={{ i }}">{{ i + 1 }}</a></li>
+				{% endif %}
+				
+			{% endfor %}
+			{% if actualPage < numberOfPages - 1 %}
+				<li><a href="{{ url }}listar/?page={{ actualPage + 1  }}">Siguiente</a></li>
+			{% endif %}
+		</ul>
+	{% endif %}
+
+{% endblock %}

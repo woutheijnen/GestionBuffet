@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+
+{% block configuration %}
+{% if session.role == "ADMIN" %}
+		<li>
+			<a href="/index.php/configuration">Configuraci&oacute;n</a>
+		</li>
+	{% endif %}
+{% endblock %}
+
+
+{% block sidebar %}
+<ul id="list-menu">
+	<li class="dropdown"><h4 class="list-menu-title">Productos</h4>
+		<ul class="list-menu-options sub-menu">
+			<li><a href="/index.php/product/addProduct">Agregar producto</a></li>
+			<li><a href="/index.php/product/listar">Listar productos</a></li>
+			{% if session.role == constants.GESTION %}
+			<li><a href="/index.php/product/missingProducts">Listar productos faltantes</a></li>
+			<li><a href="/index.php/product/minimumStock">Listar productos con stock m&iacute;nimo</a></li>
+			{% endif %}
+		</ul>
+	</li>
+	<li class="dropdown"><h4 class="list-menu-title">Ventas</h4>
+		<ul class="list-menu-options sub-menu">
+			<li><a href="/index.php/sale/addSale">Agregar venta</a></li>
+			<li><a href="/index.php/sale/listar">Listar ventas</a></li>
+		</ul>
+	</li>
+	<li class="dropdown"><h4 class="list-menu-title">Compras</h4>
+		<ul class="list-menu-options sub-menu">
+		   	<li><a href="/index.php/purchase/addPurchase">Agregar compra</a></li>
+			<li><a href="/index.php/purchase/listar">Listar compras</a></li>
+			<li><a href="">Listar compras entre 2 fechas</a></li>
+		</ul>
+	</li>
+	{% if session.role == constants.ADMIN %}
+	<li class="dropdown"><h4 class="list-menu-title">Usuarios</h4>
+		<ul class="list-menu-options sub-menu">
+			<li><a href="/index.php/user/addUser">Agregar usuario</a></li>
+			<li><a href="/index.php/user/listar">Listar usuarios</a></li>
+			<li><a href="/index.php/user/enableUsers">Habilitar usuarios online</a></li>
+		</ul>
+	</li>
+	{% endif %}
+	<li class="dropdown"><h4 class="list-menu-title">Pedidos</h4>
+        <ul class="list-menu-options sub-menu">
+        	<li><a href="">Agregar pedido online</a></li>
+			<li><a href="">Listar pedidos</a></li>
+        </ul>
+	</li>
+	<li class="dropdown"><h4 class="list-menu-title">Proveedores</h4>
+        <ul class="list-menu-options sub-menu">
+        	<li><a href="/index.php/provider/addProvider">Agregar proveedor</a></li>
+			<li><a href="/index.php/provider/listar">Listar proveedores</a></li>
+        </ul>
+	</li>
+	<li class="dropdown"><h4 class="list-menu-title">Balance</h4>
+		<ul class="list-menu-options sub-menu">
+			<li><a href="">Listar ingresos entre 2 fechas</a></li>
+		</ul>
+	</li>
+</ul>  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+<script>
+$(document).ready(function() {
+    $( '.dropdown' ).hover(
+        function(){
+            $(this).children('.sub-menu').slideDown(200);
+        },
+        function(){
+            $(this).children('.sub-menu').slideUp(200);
+        }
+    );
+});
+</script>
+{% endblock %}
+
+{% block main %} {% endblock %}

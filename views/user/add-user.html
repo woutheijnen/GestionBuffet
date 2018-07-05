@@ -1,0 +1,46 @@
+{% extends "layout-admin.html" %}
+
+{% block main %}
+	<form action="{{ session.base_path }}addUser" method="POST">
+			<h1 class="title-h1">Datos del usuario</h1>
+			<input type="hidden" id="id" name="id" title="id" value="{{ user.id }}">
+			<input type="text" name="username" id="username" title="username" placeholder="*Nombre de usuario" required value="{{ user.username }}" ><br>
+			<input type="password" name="password" id="user-password" title="user-password" placeholder="*Contraseña" required><br>
+			<input type="password" name="password2" id="user-password2" title="user-password2" placeholder="*Repetir contraseña" required><br>
+			<input type="text" name="name" id="user-name" title="user-name" placeholder="*Nombre" pattern="[A-Za-z]{2,}|[A-Za-z]{2,} [A-Za-z]{2,}|[A-Za-z]{2,} |[A-Za-z]{2,} [A-Za-z]{2,} " required value="{{ user.name }}"><br>
+			<input type="text" name="last-name" id="user-last-name" title="user-last-name" placeholder="*Apellido" pattern="[A-Za-z]{2,}|[A-Za-z]{2,} [A-Za-z]{2,}|[A-Za-z]{2,} |[A-Za-z]{2,} [A-Za-z]{2,} " required value="{{ user.lastName }}"><br>
+			<div class="typeDocument">
+				<h4 class="text-description">*Documento</h4>
+				<select name="document-type" >
+					<option value="DNI"{% if user.documentType == "DNI"%} selected {% endif %}>DNI</option>
+					<option value="CI" {% if user.documentType == "CI"%} selected {% endif %}>CI</option>
+					<option value="LC" {% if user.documentType == "LC"%} selected {% endif %}>LC</option>
+					<option value="LE" {% if user.documentType == "LE"%} selected {% endif %}>LE</option>
+				</select>
+			</div>
+			<input type="text" name="document" id="user-document" title="user-document" placeholder="*Nro. documento" required value="{{ user.document }}"><br>
+			<input type="email" name="email" id="user-email" title="user-email" placeholder="*Email" required value="{{ user.email }}"><br>
+			<input type="text" name="telephone" id="user-telephone" title="user-telephone" placeholder="*Telefono" required value="{{ user.telephone }}"><br>
+
+			<div class="role">
+				<h4 class="text-description">*Rol</h4>
+				<select name="role">
+					{% for role in roles %}
+						<option value="{{ role.id }}" {% if role.id == user.role.id %} selected {% endif %}>{{ role.name }}
+					{% endfor %}
+				</select>
+			</div>
+
+			<div class="location">
+				<h4 class="text-description">*Ubicaci&oacute;n</h4>
+				<select name="location">
+					{% for location in locations %}
+						<option value="{{ location.id }}" {% if location.id == user.location.id %} selected {% endif %} >{{ location.name }}
+					{% endfor %}
+				</select>
+			</div>
+
+
+			<button type="submit"> DAR DE ALTA</button>
+		</form>
+{% endblock %}

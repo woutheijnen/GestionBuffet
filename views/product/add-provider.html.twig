@@ -1,0 +1,23 @@
+{% extends "layout-admin.html" %}
+
+{% block main %}
+	<form action="{{ url }}addProvider" method="POST">
+			<h1 class="title-h1">Datos del Proveedor</h1>
+
+			<input type="hidden" id="id" name="id" title="id" value="{{ provider.id }}">
+
+			<input type="text" id="name" name="name" title="name" pattern="[A-Za-z]{2,}|[A-Za-z]{2,} [A-Za-z]{2,}|[A-Za-z]{2,} |[A-Za-z]{2,} [A-Za-z]{2,} " placeholder="*Nombre" required value="{{ provider.name }}">
+
+			<input type="text" id="cuit" name="cuit" title="cuit"  pattern="[A-Za-z]{2,}|[A-Za-z]{2,} [A-Za-z]{2,}|[A-Za-z]{2,} |[A-Za-z]{2,} [A-Za-z]{2,}" placeholder="*CUIT" value="{{ provider.cuit }}">
+
+			<input type="text" id="email" name="email" title="email" placeholder="*Email" pattern="[^ @]+@[^ @]+.[a-z]+" value="{{ provider.email }}">
+
+			<input type="text" id="phone" name="phone" title="phone" placeholder="*Teléfono" value="{{ provider.phone }}">
+
+			<input type="text" id="address" name="address" title="address" placeholder="*Dirección" value="{{ provider.address }}">
+
+			<input type="text" id="description" name="description" title="description" placeholder="*Descripción" value="{{ provider.description }}">
+
+			<button type="submit">Guardar</button>
+		</form>
+{% endblock %}
